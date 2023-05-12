@@ -2,16 +2,20 @@ import BackgroundImg from "@assets/background.png"
 import LogoSVG from "@assets/logo.svg"
 import { Button } from "@components/Button"
 import { Input } from "@components/Input"
+import { useNavigation } from "@react-navigation/native"
 
 import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base'
 import { Keyboard, TouchableWithoutFeedback } from "react-native"
 
 export function SignUp() {
+  const { goBack } = useNavigation()
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <VStack bg="gray.700" flex={1}>
         <Image
           source={BackgroundImg}
+          defaultSource={BackgroundImg}
           alt="People at the Gym"
           resizeMode="contain"
           position="absolute"
@@ -47,7 +51,7 @@ export function SignUp() {
         </ScrollView>
 
         <Center px={6} pb={16} mt={24}>
-          <Button title="Voltar para o login" variant="outline" />
+          <Button title="Voltar para o login" variant="outline" onPress={() => goBack()} />
         </Center>
       </VStack >
     </TouchableWithoutFeedback >

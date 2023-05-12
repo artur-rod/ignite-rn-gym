@@ -2,16 +2,21 @@ import BackgroundImg from "@assets/background.png"
 import LogoSVG from "@assets/logo.svg"
 import { Button } from "@components/Button"
 import { Input } from "@components/Input"
+import { useNavigation } from "@react-navigation/native"
+import { AuthNavigatorRoutesProps } from "@routes/auth.routes"
 
 import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base'
 import { Keyboard, TouchableWithoutFeedback } from "react-native"
 
 export function SignIn() {
+  const { navigate } = useNavigation<AuthNavigatorRoutesProps>()
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <VStack bg="gray.700" flex={1}>
         <Image
           source={BackgroundImg}
+          defaultSource={BackgroundImg}
           alt="People at the Gym"
           resizeMode="contain"
           position="absolute"
@@ -49,7 +54,7 @@ export function SignIn() {
           <Text color="gray.100" fontSize="sm" mb={3} fontFamily="body">
             Ainda não tem acesso?
           </Text>
-          <Button title="Criar conta" variant="outline" />
+          <Button title="Criar conta" variant="outline" onPress={() => navigate("SignUp")} />
         </Center>
       </VStack >
     </TouchableWithoutFeedback >
