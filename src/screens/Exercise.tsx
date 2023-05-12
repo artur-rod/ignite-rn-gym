@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { AppNavigatorRoutesProps } from "@routes/app.routes";
-import { Box, HStack, Heading, Icon, Image, Text, VStack } from "native-base";
+import { Box, HStack, Heading, Icon, Image, ScrollView, Text, VStack } from "native-base";
 import { TouchableOpacity } from "react-native";
 
 import { Button } from "@components/Button";
@@ -37,32 +37,34 @@ export function Exercise() {
         </HStack>
       </VStack>
 
-      <VStack p={6}>
-        <Image
-          w="full"
-          h={80}
-          source={{ uri: "https://www.origym.com.br/upload/remada-unilateral-3.png" }}
-          alt="Nome do exercício"
-          mb={3}
-          resizeMode="cover"
-          rounded="lg"
-        />
+      <ScrollView>
+        <VStack p={6}>
+          <Image
+            w="full"
+            h={80}
+            source={{ uri: "https://www.origym.com.br/upload/remada-unilateral-3.png" }}
+            alt="Nome do exercício"
+            mb={3}
+            resizeMode="cover"
+            rounded="lg"
+          />
 
-        <Box bg="gray.600" rounded="md" pb={4} px={4}>
-          <HStack alignItems="center" justifyContent="space-around" mb={6} mt={5}>
-            <HStack>
-              <SeriesSVG />
-              <Text color="gray.200" ml={2}>3 séries</Text>
+          <Box bg="gray.600" rounded="md" pb={4} px={4}>
+            <HStack alignItems="center" justifyContent="space-around" mb={6} mt={5}>
+              <HStack>
+                <SeriesSVG />
+                <Text color="gray.200" ml={2}>3 séries</Text>
+              </HStack>
+              <HStack>
+                <RepsSVG />
+                <Text color="gray.200" ml={2}>12 repetições</Text>
+              </HStack>
             </HStack>
-            <HStack>
-              <RepsSVG />
-              <Text color="gray.200" ml={2}>12 repetições</Text>
-            </HStack>
-          </HStack>
 
-          <Button title="Marcar como concluído" />
-        </Box>
-      </VStack>
+            <Button title="Marcar como concluído" />
+          </Box>
+        </VStack>
+      </ScrollView>
     </VStack>
   )
 }

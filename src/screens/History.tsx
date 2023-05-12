@@ -17,7 +17,7 @@ export function History() {
   ])
 
   return (
-    <VStack>
+    <VStack flex={1}>
       <ScreenHeader title="Histórico de Exercícios" />
       <SectionList
         sections={exercises}
@@ -28,7 +28,7 @@ export function History() {
         renderSectionHeader={({ section }) => (
           <Heading color="gray.200" fontSize="md" mt={10} mb={3}>{section.title}</Heading>
         )}
-        contentContainerStyle={!exercises.length && { height: '95%', justifyContent: 'center' }}
+        contentContainerStyle={!exercises.length && { flex: 1, justifyContent: 'center' }}
         ListEmptyComponent={() => (
           <VStack alignItems="center">
             <Icon as={MaterialIcons} name="sentiment-dissatisfied" size={10} mb={4} />
