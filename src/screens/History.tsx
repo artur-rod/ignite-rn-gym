@@ -33,11 +33,12 @@ export function History() {
           <VStack alignItems="center">
             <Icon as={MaterialIcons} name="sentiment-dissatisfied" size={10} mb={4} />
             <Text color="gray.200" textAlign="center">
-              {`Não há exercícios registrados ainda.\nVamos fazer exercícios hoje?`}
+              Não há exercícios registrados ainda.{"\n"}
+              Vamos fazer exercícios hoje?
             </Text>
           </VStack>
         )}
-        px={4}
+        px={6}
       />
     </VStack>
   )
