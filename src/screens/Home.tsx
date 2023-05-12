@@ -26,12 +26,12 @@ export function Home() {
         )}
         horizontal
         showsHorizontalScrollIndicator={false}
-        _contentContainerStyle={{ px: 8 }}
+        _contentContainerStyle={{ px: 4 }}
         my={10}
         maxH={10}
       />
 
-      <VStack flex={1} px={8}>
+      <VStack flex={1} px={4}>
         <HStack justifyContent="space-between" mb={2}>
           <Heading fontFamily="heading" color="gray.200" fontSize="md">Exercícios</Heading>
           <Text color="gray.200" fontSize="sm">4</Text>

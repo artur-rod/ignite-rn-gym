@@ -1,7 +1,7 @@
 import { BottomTabNavigationProp, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useTheme } from "native-base";
 
-import { Exercises } from "@screens/Exercises";
+import { Exercise } from "@screens/Exercise";
 import { History } from "@screens/History";
 import { Home } from "@screens/Home";
 import { Profile } from "@screens/Profile";
@@ -15,7 +15,7 @@ type AppRoutes = {
   Home: undefined;
   Profile: undefined;
   History: undefined;
-  Exercises: undefined;
+  Exercise: undefined;
 }
 
 export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>
@@ -53,7 +53,7 @@ export function AppRoutes() {
         tabBarIcon: ({ color }) => (<ProfileSVG fill={color} width={iconSize} height={iconSize} />)
       }}
       />
-      <Screen name="Exercises" component={Exercises} options={{ tabBarButton: () => null }} />
+      <Screen name="Exercise" component={Exercise} options={{ tabBarButton: () => null }} />
     </Navigator>
   )
 }
