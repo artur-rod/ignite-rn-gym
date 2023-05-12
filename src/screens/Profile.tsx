@@ -3,7 +3,7 @@ import { FileInfo } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 import { Center, Heading, ScrollView, Skeleton, Text, VStack, useToast } from "native-base";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { Keyboard, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 
 import { Button } from "@components/Button";
 import { Input } from "@components/Input";
@@ -57,34 +57,40 @@ export function Profile() {
   }
 
   return (
-    <VStack flex={1}>
-      <ScreenHeader title="Perfil" />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <VStack flex={1}>
+        <ScreenHeader title="Perfil" />
 
-      <ScrollView showsVerticalScrollIndicator={false} px={6}>
-        <Center mt={6}>
-          {
-            photoIsLoading
-              ? <Skeleton w={PHOTO_SIZE} h={PHOTO_SIZE} rounded="full" startColor="gray.600" endColor="gray.400" />
-              : <UserPhoto size={PHOTO_SIZE} source={{ uri: profilePicture }} />
-          }
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ flexGrow: 1 }}
+          automaticallyAdjustKeyboardInsets={true}
+          px={6}>
+          <Center mt={6}>
+            {
+              photoIsLoading
+                ? <Skeleton w={PHOTO_SIZE} h={PHOTO_SIZE} rounded="full" startColor="gray.600" endColor="gray.400" />
+                : <UserPhoto size={PHOTO_SIZE} source={{ uri: profilePicture }} />
+            }
 
-          <TouchableOpacity onPress={handleUserPhotoSelect}>
-            <Text color="green.500" fontFamily="heading" fontSize="md" mt={2} mb={8}>Alterar foto</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={handleUserPhotoSelect}>
+              <Text color="green.500" fontFamily="heading" fontSize="md" mt={2} mb={8}>Alterar foto</Text>
+            </TouchableOpacity>
 
-          <Input placeholder="Nome" bg="gray.600" />
-          <Input placeholder="E-mail" bg="gray.600" isDisabled />
-        </Center>
+            <Input placeholder="Nome" bg="gray.600" />
+            <Input placeholder="E-mail" bg="gray.600" isDisabled />
+          </Center>
 
-        <VStack mt={10} mb={6}>
-          <Heading color="gray.200" fontFamily="heading" fontSize="md" mb={2}>Alterar senha</Heading>
-          <Input placeholder="Senha antiga" bg="gray.600" />
-          <Input placeholder="Nova senha" bg="gray.600" />
-          <Input placeholder="Confirme a nova senha" bg="gray.600" />
-        </VStack>
+          <VStack mt={10} mb={6}>
+            <Heading color="gray.200" fontFamily="heading" fontSize="md" mb={2}>Alterar senha</Heading>
+            <Input placeholder="Senha antiga" bg="gray.600" />
+            <Input placeholder="Nova senha" bg="gray.600" />
+            <Input placeholder="Confirme a nova senha" bg="gray.600" />
+          </VStack>
 
-        <Button title="Atualizar" mb={8} />
-      </ScrollView>
-    </VStack>
+          <Button title="Atualizar" mb={8} />
+        </ScrollView>
+      </VStack>
+    </TouchableWithoutFeedback>
   )
 }
