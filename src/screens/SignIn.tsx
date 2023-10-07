@@ -3,10 +3,13 @@ import LogoSVG from "@assets/logo.svg"
 import { Button } from "@components/Button"
 import { Input } from "@components/Input"
 import { yupResolver } from "@hookform/resolvers/yup"
+import { useAuth } from "@hooks/useAuth"
 import { useNavigation } from "@react-navigation/native"
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes"
+import { AppError } from "@utils/AppError"
 
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base'
+import { Center, Heading, Image, ScrollView, Text, VStack, useToast } from 'native-base'
+import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Keyboard, TouchableWithoutFeedback } from "react-native"
 import * as yup from "yup"
@@ -22,15 +25,33 @@ const SignInSchema = yup.object({
 })
 
 export function SignIn() {
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { signIn } = useAuth()
+  const { navigate } = useNavigation<AuthNavigatorRoutesProps>()
+  const toast = useToast()
+
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(SignInSchema)
   })
 
-  function handleSignIn(data: FormDataProps) {
-    console.log(data)
-  }
+  async function handleSignIn({ email, password }: FormDataProps) {
+    try {
+      setIsLoading(true)
+      await signIn(email, password)
+    } catch (err) {
+      const isAppError = err instanceof AppError
+      const title = isAppError ? err.message : "Sign In Failed. Try again later."
 
-  const { navigate } = useNavigation<AuthNavigatorRoutesProps>()
+      setIsLoading(false)
+
+      toast.show({
+        title,
+        placement: "top",
+        bgColor: "red.500"
+      })
+    }
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -93,7 +114,7 @@ export function SignIn() {
                 )}
               />
 
-              <Button title="Acessar" onPress={handleSubmit(handleSignIn)} />
+              <Button title="Acessar" onPress={handleSubmit(handleSignIn)} isLoading={isLoading} />
             </Center>
 
           </VStack>

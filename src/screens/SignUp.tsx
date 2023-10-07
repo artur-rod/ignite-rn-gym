@@ -5,7 +5,11 @@ import { Input } from "@components/Input"
 import { useNavigation } from "@react-navigation/native"
 
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Center, Heading, Image, ScrollView, Text, VStack } from 'native-base'
+import { useAuth } from "@hooks/useAuth"
+import { API } from "@services/api"
+import { AppError } from "@utils/AppError"
+import { Center, Heading, Image, ScrollView, Text, VStack, useToast } from 'native-base'
+import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Keyboard, TouchableWithoutFeedback } from "react-native"
 import * as yup from "yup"
@@ -25,12 +29,32 @@ const SignUpSchema = yup.object({
 })
 
 export function SignUp() {
+  const [isLoading, setIsLoading] = useState(false)
+  const toast = useToast()
+  const { signIn } = useAuth()
+
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
     resolver: yupResolver(SignUpSchema)
   })
 
-  function handleSignUp(data: FormDataProps) {
-    console.log(data)
+  async function handleSignUp({ name, email, password }: FormDataProps) {
+    try {
+      setIsLoading(true)
+
+      await API.post("/users", { name, email, password })
+      await signIn(email, password)
+    } catch (err) {
+      setIsLoading(false)
+
+      const isAppError = err instanceof AppError
+      const message = isAppError ? err.message : "Server Error. Try again later."
+
+      toast.show({
+        title: message,
+        placement: "top",
+        bg: "red.500"
+      })
+    }
   }
 
   const { goBack } = useNavigation()
@@ -121,7 +145,7 @@ export function SignUp() {
                 )}
               />
 
-              <Button title="Criar e acessar" onPress={handleSubmit(handleSignUp)} />
+              <Button title="Criar e acessar" onPress={handleSubmit(handleSignUp)} isLoading={isLoading} />
             </Center>
 
           </VStack>
